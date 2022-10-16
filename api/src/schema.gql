@@ -1,0 +1,58 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+"""
+The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
+"""
+scalar JSON
+
+enum Onboarding {
+  AVATAR
+  COMPLETE
+  NAME
+}
+
+type Query {
+  sayHello: String!
+}
+
+"""
+`Date` type as integer. Type represents date and time as number of milliseconds from start of UNIX epoch.
+"""
+scalar Timestamp
+
+enum UserKind {
+  GUEST
+  User
+}
+
+type UserModel {
+  activationKey: String
+  avatarUrl: String
+  completedPercentage: Int!
+  createdAt: Timestamp!
+  email: Boolean
+  firstName: String
+  id: String!
+  isAdmin: Boolean
+  isComplete: Boolean
+  isOnline: Boolean
+  kind: UserKind
+  lastName: String
+  meta: JSON
+  name: String!
+  onboarding: Onboarding!
+  photos: [UserPhotoModel!]!
+  refreshToken: String
+  updatedAt: Timestamp!
+  wantsNewsletter: Boolean
+}
+
+type UserPhotoModel {
+  createdAt: Timestamp!
+  id: String!
+  updatedAt: Timestamp!
+  url: String!
+  user: UserModel!
+}

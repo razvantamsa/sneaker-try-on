@@ -1,0 +1,29 @@
+{
+  "name": "pepsiteam",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "private": true,
+  "dependencies": {
+    "create-react-native-app": "^3.8.0",
+    "expo-cli": "^6.0.6"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/razvantamsa/sneaker-try-on"
+  },
+  "engines": {
+    "node": "14.17.0",
+    "npm": "7.14.0"
+  },
+  "workspaces": [
+    "api",
+    "packages/*"
+  ],
+  "author": "Bebsi Team",
+  "license": "ISC"
+}

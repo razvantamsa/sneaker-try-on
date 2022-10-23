@@ -1,49 +1,45 @@
-import { Injectable, Logger } from '@nestjs/common';
+import { Inject, Injectable, Logger } from '@nestjs/common';
 import { v4 as uuidv4 } from 'uuid';
 import { User } from 'apps/common/models/user';
 import { CreateUserDto } from 'apps/common/dto/create-user.dto';
 import { UpdateUserDto } from 'apps/common/dto/update-user.dto';
+import { ClientProxy } from '@nestjs/microservices';
 
 @Injectable()
 export class UserService {
-  private users: User[] = [];
-
   private logger;
-  constructor() {
+  constructor(@Inject('USERS') private readonly userClient: ClientProxy) {
     this.logger = new Logger();
   }
 
-  public getUser(userId: string): User {
+  public getUser(userId: string) {
     this.logger.log(`Fetching user ${userId}...`);
-    return this.users.find((entry) => entry.userId === userId);
+    return this.userClient.send({ cmd: 'get_user' }, { userId });
   }
 
-  public getUsers(): User[] {
+  public getUsers() {
     this.logger.log(`Fetching all users...`);
-    return this.users;
+    return this.userClient.send({ cmd: 'get_users' }, {});
   }
 
-  public createUser({ email, password }: CreateUserDto): User {
+  public createUser(createUserDto: CreateUserDto) {
     this.logger.log(`Creating user...`);
 
-    const newUser = new User(uuidv4(), email, password, false);
-    this.users.push(newUser);
-    return newUser;
+    return this.userClient.send({ cmd: 'create_user' }, { createUserDto });
   }
 
-  public updateUser(userId: string, updateUserDto: UpdateUserDto): User {
+  public updateUser(userId: string, updateUserDto: UpdateUserDto) {
     this.logger.log(`Updating user ${userId}...`);
 
-    const user = this.users.find((entry) => entry.userId === userId);
-    Object.assign(user, updateUserDto);
-    return user;
+    return this.userClient.send(
+      { cmd: 'update_user' },
+      { userId, updateUserDto },
+    );
   }
 
-  public deleteUser(userId: string): User {
+  public deleteUser(userId: string) {
     this.logger.log(`Deleting user ${userId}...`);
-    const userIndex = this.users.findIndex((user) => user.userId === userId);
-    const user = this.users[userIndex];
-    this.users.splice(userIndex);
-    return user;
+
+    return this.userClient.send({ cmd: 'update_user' }, { userId });
   }
 }

@@ -9,17 +9,17 @@ export class UserResolver {
   constructor(private readonly userService: UserService) {}
 
   @Query(() => User, { name: 'user', nullable: true })
-  getUser(@Args('userId') userId: string): User {
+  getUser(@Args('userId') userId: string) {
     return this.userService.getUser(userId);
   }
 
   @Query(() => [User], { name: 'users', nullable: true })
-  getUsers(): User[] {
+  getUsers() {
     return this.userService.getUsers();
   }
 
   @Mutation(() => User)
-  createUser(@Args('createUserDto') createUserDto: CreateUserDto): User {
+  createUser(@Args('createUserDto') createUserDto: CreateUserDto) {
     return this.userService.createUser(createUserDto);
   }
 
@@ -27,12 +27,12 @@ export class UserResolver {
   updateUser(
     @Args('userId') userId: string,
     @Args('updateUserDto') updateUserDto: UpdateUserDto,
-  ): User {
+  ) {
     return this.userService.updateUser(userId, updateUserDto);
   }
 
   @Mutation(() => User)
-  deleteUser(@Args('userId') userId: string): User {
+  deleteUser(@Args('userId') userId: string) {
     return this.userService.deleteUser(userId);
   }
 }

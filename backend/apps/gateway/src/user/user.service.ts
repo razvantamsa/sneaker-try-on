@@ -1,6 +1,4 @@
 import { Inject, Injectable, Logger } from '@nestjs/common';
-import { v4 as uuidv4 } from 'uuid';
-import { User } from 'apps/common/models/user';
 import { CreateUserDto } from 'apps/common/dto/create-user.dto';
 import { UpdateUserDto } from 'apps/common/dto/update-user.dto';
 import { ClientProxy } from '@nestjs/microservices';

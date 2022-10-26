@@ -1,49 +1,55 @@
+import { Repository } from 'typeorm';
+import { InjectRepository } from '@nestjs/typeorm';
 import { Injectable, Logger } from '@nestjs/common';
-import { CreateUserDto } from 'apps/common/dto/create-user.dto';
-import { UpdateUserDto } from 'apps/common/dto/update-user.dto';
+import { CreateUserDto } from 'apps/common/dto/createUser.dto';
+import { UpdateUserDto } from 'apps/common/dto/updateUser.dto';
 import { v4 as uuidv4 } from 'uuid';
-import { User } from 'apps/common/models/user';
+import { UserModel } from 'apps/common/models/userModel';
 
 @Injectable()
 export class UserService {
-  private users: User[] = [];
-
   private logger;
-  constructor() {
+
+  constructor(
+    @InjectRepository(UserModel)
+    private readonly userRepository: Repository<UserModel>,
+  ) {
     this.logger = new Logger();
   }
 
-  public getUser(userId: string) {
+  async getUser(userId: string): Promise<UserModel> {
     this.logger.log(`Fetching user ${userId}...`);
-    return this.users.find((entry) => entry.userId === userId);
+    return await this.userRepository.findOne({ userId });
   }
 
-  public getUsers(): User[] {
+  async getAllUsers(): Promise<UserModel[]> {
     this.logger.log(`Fetching all users...`);
-    return this.users;
+    return await this.userRepository.find();
   }
 
-  public createUser({ email, password }: CreateUserDto): User {
+  async createUser({ email, password }: CreateUserDto): Promise<UserModel> {
     this.logger.log(`Creating user...`);
 
-    const newUser = new User(uuidv4(), email, password, false);
-    this.users.push(newUser);
+    const newUser = new UserModel(uuidv4(), email, password, false);
+    await this.userRepository.save(newUser);
     return newUser;
   }
 
-  public updateUser(userId: string, updateUserDto: UpdateUserDto): User {
+  async updateUser(
+    userId: string,
+    updateUserDto: UpdateUserDto,
+  ): Promise<UserModel> {
     this.logger.log(`Updating user ${userId}...`);
 
-    const user = this.users.find((entry) => entry.userId === userId);
-    Object.assign(user, updateUserDto);
+    const user = await this.getUser(userId);
+    await this.userRepository.update(userId, updateUserDto);
     return user;
   }
 
-  public deleteUser(userId: string): User {
+  async deleteUser(userId: string): Promise<UserModel> {
     this.logger.log(`Deleting user ${userId}...`);
-    const userIndex = this.users.findIndex((user) => user.userId === userId);
-    const user = this.users[userIndex];
-    this.users.splice(userIndex);
-    return user;
+    const deletedUser = await this.getUser(userId);
+    await this.userRepository.delete(userId);
+    return deletedUser;
   }
 }

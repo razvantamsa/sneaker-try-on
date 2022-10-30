@@ -1,6 +1,7 @@
 import { Controller, Get } from '@nestjs/common';
 import { MessagePattern } from '@nestjs/microservices';
-import { User } from 'apps/common/models/user';
+import { CreateUserDto } from 'apps/common/dto/createUser.dto';
+import { UserModel } from 'apps/common/models/userModel';
 import { UserService } from './user.service';
 
 @Controller()
@@ -13,27 +14,27 @@ export class UserController {
   }
 
   @MessagePattern({ cmd: 'get_user' })
-  getUser({ userId }): User {
-    return this.userService.getUser(userId);
+  async getUser({ userId }): Promise<UserModel> {
+    return await this.userService.getUser(userId);
   }
 
   @MessagePattern({ cmd: 'get_users' })
-  getUsers(): User[] {
-    return this.userService.getUsers();
+  async getUsers(): Promise<UserModel[]> {
+    return await this.userService.getAllUsers();
   }
 
   @MessagePattern({ cmd: 'create_user' })
-  createUser({ createUserDto }): User {
-    return this.userService.createUser(createUserDto);
+  async createUser(createUserDto: CreateUserDto): Promise<UserModel> {
+    return await this.userService.createUser(createUserDto);
   }
 
   @MessagePattern({ cmd: 'update_user' })
-  updateUser({ userId, updateUserDto }): User {
-    return this.userService.updateUser(userId, updateUserDto);
+  async updateUser({ userId, updateUserDto }): Promise<UserModel> {
+    return await this.userService.updateUser(userId, updateUserDto);
   }
 
   @MessagePattern({ cmd: 'delete_user' })
-  deleteUser({ userId }): User {
-    return this.userService.deleteUser(userId);
+  async deleteUser({ userId }): Promise<UserModel> {
+    return await this.userService.deleteUser(userId);
   }
 }

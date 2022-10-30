@@ -12,6 +12,8 @@ services:
       - 3000
     # ports: 
     #   - "3000:3000"
+    env_file:
+      - .env
     restart: 
       always
 
@@ -25,8 +27,31 @@ services:
     expose:
       - 3001
       - 3101
+    env_file:
+      - .env
     # ports: 
     #   - "3001:3001"
     #   - "3101:3101"
     restart: 
       always
+
+  db:
+    build:
+      context: .
+      dockerfile: docker/postgres.Dockerfile
+    healthcheck:
+      test: ["CMD", "pg_isready", "-q", "-d", "postgres", "-U", "postgres"]
+      timeout: 45s
+      interval: 10s
+      retries: 10
+    network_mode: host
+    # ports:
+    #   - "5432:5432"
+    env_file:
+      - .env
+    volumes:
+      - database-data:/var/lib/postgresql/data/
+
+
+volumes:
+  database-data:

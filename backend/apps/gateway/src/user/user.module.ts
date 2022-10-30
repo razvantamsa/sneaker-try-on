@@ -1,7 +1,6 @@
 import { Module } from '@nestjs/common';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 import { UserResolver } from './user.resolver';
-import { UserService } from './user.service';
 
 @Module({
   imports: [
@@ -10,6 +9,6 @@ import { UserService } from './user.service';
       { name: 'USERS', transport: Transport.TCP, options: { port: 3001 } },
     ]),
   ],
-  providers: [UserResolver, UserService],
+  providers: [UserResolver],
 })
 export class UserModule {}

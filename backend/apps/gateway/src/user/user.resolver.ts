@@ -1,26 +1,34 @@
+import { Inject, Logger } from '@nestjs/common';
 import { Resolver, Query, Args, Mutation } from '@nestjs/graphql';
+import { ClientProxy } from '@nestjs/microservices';
 import { CreateUserDto } from 'apps/common/dto/create-user.dto';
 import { UpdateUserDto } from 'apps/common/dto/update-user.dto';
 import { User } from 'apps/common/models/user';
-import { UserService } from './user.service';
 
 @Resolver()
 export class UserResolver {
-  constructor(private readonly userService: UserService) {}
+  private logger;
+
+  constructor(@Inject('USERS') private readonly userClient: ClientProxy) {
+    this.logger = new Logger();
+  }
 
   @Query(() => User, { name: 'user', nullable: true })
   getUser(@Args('userId') userId: string) {
-    return this.userService.getUser(userId);
+    this.logger.log(`Fetching user ${userId}...`);
+    return this.userClient.send({ cmd: 'get_user' }, { userId });
   }
 
   @Query(() => [User], { name: 'users', nullable: true })
   getUsers() {
-    return this.userService.getUsers();
+    this.logger.log(`Fetching all users...`);
+    return this.userClient.send({ cmd: 'get_users' }, {});
   }
 
   @Mutation(() => User)
   createUser(@Args('createUserDto') createUserDto: CreateUserDto) {
-    return this.userService.createUser(createUserDto);
+    this.logger.log(`Creating user...`);
+    return this.userClient.send({ cmd: 'create_user' }, { createUserDto });
   }
 
   @Mutation(() => User)
@@ -28,11 +36,16 @@ export class UserResolver {
     @Args('userId') userId: string,
     @Args('updateUserDto') updateUserDto: UpdateUserDto,
   ) {
-    return this.userService.updateUser(userId, updateUserDto);
+    this.logger.log(`Updating user ${userId}...`);
+    return this.userClient.send(
+      { cmd: 'update_user' },
+      { userId, updateUserDto },
+    );
   }
 
   @Mutation(() => User)
   deleteUser(@Args('userId') userId: string) {
-    return this.userService.deleteUser(userId);
+    this.logger.log(`Deleting user ${userId}...`);
+    return this.userClient.send({ cmd: 'update_user' }, { userId });
   }
 }

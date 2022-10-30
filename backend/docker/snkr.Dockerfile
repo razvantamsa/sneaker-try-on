@@ -25,4 +25,4 @@ RUN cd ./dist/apps && mkdir service
 RUN mv dist/apps/${SERVICE}/main.js dist/apps/service/main.js
 
 # Start the server using the production build
-CMD [ "node", "dist/apps/service/main.js", "--host", "0.0.0.0"]
+CMD [ "node", "dist/apps/service/main.js" ]

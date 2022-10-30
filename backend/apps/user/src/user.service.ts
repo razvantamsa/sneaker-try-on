@@ -2,13 +2,12 @@ import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Injectable, Logger } from '@nestjs/common';
 import { CreateUserDto } from 'apps/common/dto/createUser.dto';
-import { UpdateUserDto } from 'apps/common/dto/updateUser.dto';
 import { v4 as uuidv4 } from 'uuid';
 import { UserModel } from 'apps/common/models/userModel';
-
+import { UpdateUserClientDto } from 'apps/common/dto/updateUserClient.dto';
 @Injectable()
 export class UserService {
-  private logger;
+  private logger: Logger;
 
   constructor(
     @InjectRepository(UserModel)
@@ -19,12 +18,12 @@ export class UserService {
 
   async getUser(userId: string): Promise<UserModel> {
     this.logger.log(`Fetching user ${userId}...`);
-    return await this.userRepository.findOne({ userId });
+    return this.userRepository.findOne({ where: { userId } });
   }
 
   async getAllUsers(): Promise<UserModel[]> {
     this.logger.log(`Fetching all users...`);
-    return await this.userRepository.find();
+    return this.userRepository.find();
   }
 
   async createUser({ email, password }: CreateUserDto): Promise<UserModel> {
@@ -35,10 +34,10 @@ export class UserService {
     return newUser;
   }
 
-  async updateUser(
-    userId: string,
-    updateUserDto: UpdateUserDto,
-  ): Promise<UserModel> {
+  async updateUser({
+    userId,
+    updateUserDto,
+  }: UpdateUserClientDto): Promise<UserModel> {
     this.logger.log(`Updating user ${userId}...`);
 
     const user = await this.getUser(userId);

@@ -7,7 +7,7 @@ import { UserModel } from 'apps/common/models/userModel';
 
 @Resolver()
 export class UserResolver {
-  private logger;
+  private logger: Logger;
 
   constructor(@Inject('USERS') private readonly userClient: ClientProxy) {
     this.logger = new Logger();

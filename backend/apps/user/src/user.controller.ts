@@ -15,26 +15,26 @@ export class UserController {
 
   @MessagePattern({ cmd: 'get_user' })
   async getUser({ userId }): Promise<UserModel> {
-    return await this.userService.getUser(userId);
+    return this.userService.getUser(userId);
   }
 
   @MessagePattern({ cmd: 'get_users' })
   async getUsers(): Promise<UserModel[]> {
-    return await this.userService.getAllUsers();
+    return this.userService.getAllUsers();
   }
 
   @MessagePattern({ cmd: 'create_user' })
   async createUser(createUserDto: CreateUserDto): Promise<UserModel> {
-    return await this.userService.createUser(createUserDto);
+    return this.userService.createUser(createUserDto);
   }
 
   @MessagePattern({ cmd: 'update_user' })
   async updateUser({ userId, updateUserDto }): Promise<UserModel> {
-    return await this.userService.updateUser(userId, updateUserDto);
+    return this.userService.updateUser({ userId, updateUserDto });
   }
 
   @MessagePattern({ cmd: 'delete_user' })
   async deleteUser({ userId }): Promise<UserModel> {
-    return await this.userService.deleteUser(userId);
+    return this.userService.deleteUser(userId);
   }
 }

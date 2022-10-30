@@ -1,26 +1,28 @@
 # Base image
+ARG SERVICE_NAME='default'
 FROM node:17
 
 # Create app directory
-WORKDIR /usr/src/snkr
+WORKDIR /app
+
+ARG SERVICE_NAME
+ENV SERVICE=${SERVICE_NAME}
 
 # A wildcard is used to ensure both package.json AND package-lock.json are copied
-COPY package*.json ./
-COPY nest-cli.json ./
-COPY tsconfig.json ./
-COPY tsconfig.build.json ./
+COPY *.json ./
 
 # Install app dependencies
 RUN yarn install
 
 # Bundle app source
-COPY ./apps/gateway ./apps/gateway
+COPY ./apps/${SERVICE} ./apps/${SERVICE}
 COPY ./apps/common ./apps/common
 
 # Creates a "dist" folder with the production build
-RUN yarn build
+RUN yarn build ${SERVICE}
 
-EXPOSE 3000
+RUN cd ./dist/apps && mkdir service
+RUN mv dist/apps/${SERVICE}/main.js dist/apps/service/main.js
 
 # Start the server using the production build
-CMD [ "node", "dist/apps/gateway/main.js", "--host", "0.0.0.0"]
+CMD [ "node", "dist/apps/service/main.js" ]

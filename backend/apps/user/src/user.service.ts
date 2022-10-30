@@ -9,28 +9,33 @@ import { UpdateUserClientDto } from 'apps/common/dto/updateUserClient.dto';
 export class UserService {
   private logger: Logger;
 
-  constructor(
-    @InjectRepository(UserModel)
-    private readonly userRepository: Repository<UserModel>,
-  ) {
+  private users: UserModel[] = [];
+
+  constructor() {
+    // private readonly userRepository: Repository<UserModel>, // @InjectRepository(UserModel)
     this.logger = new Logger();
   }
 
   async getUser(userId: string): Promise<UserModel> {
     this.logger.log(`Fetching user ${userId}...`);
-    return this.userRepository.findOne({ where: { userId } });
+    // return this.userRepository.findOne({ where: { userId } });
+    return this.users.find((entry) => entry.userId === userId);
   }
 
   async getAllUsers(): Promise<UserModel[]> {
     this.logger.log(`Fetching all users...`);
-    return this.userRepository.find();
+    // return this.userRepository.find();
+    return this.users;
   }
 
   async createUser({ email, password }: CreateUserDto): Promise<UserModel> {
     this.logger.log(`Creating user...`);
 
     const newUser = new UserModel(uuidv4(), email, password, false);
-    await this.userRepository.save(newUser);
+    // await this.userRepository.save(newUser);
+    // return newUser;
+
+    this.users.push(newUser);
     return newUser;
   }
 
@@ -40,15 +45,19 @@ export class UserService {
   }: UpdateUserClientDto): Promise<UserModel> {
     this.logger.log(`Updating user ${userId}...`);
 
-    const user = await this.getUser(userId);
-    await this.userRepository.update(userId, updateUserDto);
-    return user;
+    // const user = await this.getUser(userId);
+    // await this.userRepository.update(userId, updateUserDto);
+    return this.users.find((entry) => entry.userId === userId);
+
+    // return user;
   }
 
   async deleteUser(userId: string): Promise<UserModel> {
     this.logger.log(`Deleting user ${userId}...`);
     const deletedUser = await this.getUser(userId);
-    await this.userRepository.delete(userId);
-    return deletedUser;
+    // await this.userRepository.delete(userId);
+    return this.users.find((entry) => entry.userId === userId);
+
+    // return deletedUser;
   }
 }

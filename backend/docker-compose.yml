@@ -1,0 +1,30 @@
+version: "3"
+
+services:
+  snkr-gateway:
+    build:
+      context: .
+      dockerfile: docker/snkr.Dockerfile
+      args:
+        - SERVICE_NAME=gateway
+    expose:
+      - 3000
+    ports: 
+      - "3000:3000"
+    restart: 
+      always
+
+  snkr-user:
+    build:
+      context: .
+      dockerfile: docker/snkr.Dockerfile
+      args:
+        - SERVICE_NAME=user
+    expose:
+      - 3001
+      - 3101
+    ports: 
+      - "3001:3001"
+      - "3101:3101"
+    restart: 
+      always

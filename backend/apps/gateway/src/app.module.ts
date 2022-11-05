@@ -1,6 +1,7 @@
 import { ApolloDriver } from '@nestjs/apollo';
 import { Module } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
+import { ImageProcessingModule } from './image-processing/image-processing.module';
 import { UserModule } from './user/user.module';
 
 @Module({
@@ -13,6 +14,7 @@ import { UserModule } from './user/user.module';
 
     // add module for each microservice -> dispatch
     UserModule,
+    ImageProcessingModule,
   ],
   controllers: [],
   providers: [],

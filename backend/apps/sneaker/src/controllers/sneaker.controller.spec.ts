@@ -1,8 +1,8 @@
-import { Test, TestingModule } from '@nestjs/testing';
-import { SneakerController } from './sneaker.controller';
-import { SneakerService } from './sneaker.service';
+import { Test, TestingModule } from "@nestjs/testing";
+import { SneakerController } from "./sneaker.controller";
+import { SneakerService } from "./services/sneaker.service";
 
-describe('SneakerController', () => {
+describe("SneakerController", () => {
   let sneakerController: SneakerController;
 
   beforeEach(async () => {
@@ -14,9 +14,9 @@ describe('SneakerController', () => {
     sneakerController = app.get<SneakerController>(SneakerController);
   });
 
-  describe('root', () => {
+  describe("root", () => {
     it('should return "Hello World!"', () => {
-      expect(sneakerController.getHello()).toBe('Hello World!');
+      expect(sneakerController.getHello()).toBe("Hello World!");
     });
   });
 });

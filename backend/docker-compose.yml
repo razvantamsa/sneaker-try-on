@@ -35,6 +35,24 @@ services:
     restart: 
       always
 
+  snkr-ipr:
+    build:
+      context: .
+      dockerfile: docker/snkr.Dockerfile
+      args:
+        - SERVICE_NAME=image-processing
+    network_mode: host
+    expose:
+      - 3002
+      - 3102
+    env_file:
+      - .env
+    # ports: 
+    #   - "3001:3001"
+    #   - "3101:3101"
+    restart: 
+      always
+
   postgres:
     build:
       context: .

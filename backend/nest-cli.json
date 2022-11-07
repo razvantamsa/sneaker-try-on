@@ -18,22 +18,31 @@
         "tsConfigPath": "apps/gateway/tsconfig.app.json"
       }
     },
-    "user": {
+    "userSvc": {
       "type": "application",
-      "root": "apps/user",
+      "root": "apps/userSvc",
       "entryFile": "main",
-      "sourceRoot": "apps/user/src",
+      "sourceRoot": "apps/userSvc/src",
       "compilerOptions": {
-        "tsConfigPath": "apps/user/tsconfig.app.json"
+        "tsConfigPath": "apps/userSvc/tsconfig.app.json"
       }
     },
-    "sneaker": {
+    "sneakerSvc": {
       "type": "application",
-      "root": "apps/sneaker",
+      "root": "apps/sneakerSvc",
       "entryFile": "main",
-      "sourceRoot": "apps/sneaker/src",
+      "sourceRoot": "apps/sneakerSvc/src",
       "compilerOptions": {
-        "tsConfigPath": "apps/sneaker/tsconfig.app.json"
+        "tsConfigPath": "apps/sneakerSvc/tsconfig.app.json"
+      }
+    },
+    "brandSvc": {
+      "type": "application",
+      "root": "apps/brandSvc",
+      "entryFile": "main",
+      "sourceRoot": "apps/brandSvc/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/brandSvc/tsconfig.app.json"
       }
     },
     "auth": {

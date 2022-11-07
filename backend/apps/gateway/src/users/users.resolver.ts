@@ -1,37 +1,40 @@
 import { Inject, Logger } from '@nestjs/common';
-import { Resolver, Query, Args, Mutation } from '@nestjs/graphql';
+import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { ClientProxy } from '@nestjs/microservices';
-import { CreateUserDto } from 'apps/common/dto/createUser.dto';
-import { UpdateUserDto } from 'apps/common/dto/updateUser.dto';
-import { UserModel } from 'apps/common/models/userModel';
 
-@Resolver()
-export class UserResolver {
-  private logger: Logger;
+import { UserModel } from '../../../userSvc/src/users/user.model';
 
-  constructor(@Inject('USERS') private readonly userClient: ClientProxy) {
-    this.logger = new Logger();
-  }
+import { CreateUserDto } from '../../../userSvc/src/users/createUser.dto';
+import { UpdateUserDto } from '../../../userSvc/src/users/updateUser.dto';
 
-  @Query(() => UserModel, { name: 'user', nullable: true })
+@Resolver((of) => UserModel)
+export class UsersResolver {
+  constructor(
+    @Inject('USERS') private readonly userClient: ClientProxy,
+    private readonly logger: Logger,
+  ) {}
+
+  @Query((returns) => UserModel)
   getUser(@Args('userId') userId: string) {
     this.logger.log(`Fetching user ${userId}...`);
     return this.userClient.send({ cmd: 'get_user' }, { userId });
   }
 
-  @Query(() => [UserModel], { name: 'users', nullable: true })
+  @Query((returns) => [UserModel])
   getUsers() {
+    console.log('ajung aicea');
     this.logger.log(`Fetching all users...`);
+
     return this.userClient.send({ cmd: 'get_users' }, {});
   }
 
-  @Mutation(() => UserModel)
+  @Mutation((returns) => UserModel)
   createUser(@Args('createUserDto') createUserDto: CreateUserDto) {
     this.logger.log(`Creating user...`);
     return this.userClient.send({ cmd: 'create_user' }, { createUserDto });
   }
 
-  @Mutation(() => UserModel)
+  @Mutation((returns) => UserModel)
   updateUser(
     @Args('userId') userId: string,
     @Args('updateUserDto') updateUserDto: UpdateUserDto,
@@ -43,7 +46,7 @@ export class UserResolver {
     );
   }
 
-  @Mutation(() => UserModel)
+  @Mutation((returns) => UserModel)
   deleteUser(@Args('userId') userId: string) {
     this.logger.log(`Deleting user ${userId}...`);
     return this.userClient.send({ cmd: 'update_user' }, { userId });

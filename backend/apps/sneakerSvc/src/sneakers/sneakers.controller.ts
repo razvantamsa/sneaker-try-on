@@ -36,10 +36,7 @@ export class SneakersController {
   }
 
   @MessagePattern({ cmd: 'update_sneaker' })
-  async updateSneaker(
-    sneakerId: string,
-    updateSneakerDto: UpdateSneakerDto,
-  ): Promise<SneakerModel> {
+  async updateSneaker({ sneakerId, updateSneakerDto }): Promise<SneakerModel> {
     this.logger.log(`Updating sneaker ${sneakerId}...`);
     return await await this.sneakersService.updateSneaker(
       sneakerId,

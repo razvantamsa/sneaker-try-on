@@ -1,9 +1,12 @@
 import { DataSource } from 'typeorm';
+import { ConfigService } from '@nestjs/config';
 
-export const SneakerDataSource = new DataSource({
+const configService = new ConfigService();
+
+export const UserDataSource = new DataSource({
   type: 'postgres',
-  url: process.env.DATABASE_URL,
+  url: configService.get('DATABASE_URL'),
   logging: true,
-  entities: ['dist/models/*.js'],
-  migrations: ['dist/migrations/*.js'],
+  entities: ['dist/users/*.model.js'],
+  migrations: ['dist/*.js'],
 });

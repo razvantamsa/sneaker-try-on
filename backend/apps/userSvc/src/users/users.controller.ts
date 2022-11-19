@@ -1,10 +1,9 @@
-import { ClientProxy, MessagePattern } from '@nestjs/microservices';
-import { Controller, Inject, Logger } from '@nestjs/common';
+import { MessagePattern } from '@nestjs/microservices';
+import { Controller, Logger } from '@nestjs/common';
 
 import { UserModel } from './user.model';
 
 import { CreateUserDto } from './createUser.dto';
-import { UpdateUserDto } from './updateUser.dto';
 
 import { UsersService } from './users.service';
 
@@ -34,10 +33,7 @@ export class UsersController {
   }
 
   @MessagePattern({ cmd: 'update_user' })
-  async updateUser(
-    userId: string,
-    updateUserDto: UpdateUserDto,
-  ): Promise<UserModel> {
+  async updateUser({ userId, updateUserDto }): Promise<UserModel> {
     this.logger.log(`Updating user ${userId}...`);
     return await await this.usersService.updateUser(userId, updateUserDto);
   }

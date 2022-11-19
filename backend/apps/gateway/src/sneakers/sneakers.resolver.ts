@@ -2,10 +2,9 @@ import { Inject, Logger } from '@nestjs/common';
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { ClientProxy } from '@nestjs/microservices';
 
-import { SneakerModel } from '../../../sneakerSvc/src/sneakers/sneaker.model';
-
-import { CreateSneakerDto } from '../../../sneakerSvc/src/sneakers/createSneaker.dto';
-import { UpdateSneakerDto } from '../../../sneakerSvc/src/sneakers/updateSneaker.dto';
+import { CreateSneakerDto } from './createSneaker.dto';
+import { UpdateSneakerDto } from './updateSneaker.dto';
+import { SneakerModel } from './sneaker.model';
 
 @Resolver((of) => SneakerModel)
 export class SneakersResolver {
@@ -17,7 +16,7 @@ export class SneakersResolver {
   @Query((returns) => SneakerModel)
   getSneaker(@Args('sneakerId') sneakerId: string) {
     this.logger.log(`Fetching sneaker ${sneakerId}...`);
-    return this.sneakerClient.send({ cmd: 'get_sneaker' }, { sneakerId });
+    return this.sneakerClient.send({ cmd: 'get_sneaker' }, sneakerId);
   }
 
   @Query((returns) => [SneakerModel])
@@ -29,10 +28,7 @@ export class SneakersResolver {
   @Mutation((returns) => SneakerModel)
   createSneaker(@Args('createSneakerDto') createSneakerDto: CreateSneakerDto) {
     this.logger.log(`Creating sneaker...`);
-    return this.sneakerClient.send(
-      { cmd: 'create_sneaker' },
-      { createSneakerDto },
-    );
+    return this.sneakerClient.send({ cmd: 'create_sneaker' }, createSneakerDto);
   }
 
   @Mutation((returns) => SneakerModel)
@@ -50,6 +46,6 @@ export class SneakersResolver {
   @Mutation((returns) => SneakerModel)
   deleteSneaker(@Args('sneakerId') sneakerId: string) {
     this.logger.log(`Deleting sneaker ${sneakerId}...`);
-    return this.sneakerClient.send({ cmd: 'update_sneaker' }, { sneakerId });
+    return this.sneakerClient.send({ cmd: 'update_sneaker' }, sneakerId);
   }
 }

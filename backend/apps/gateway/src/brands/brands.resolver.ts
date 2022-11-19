@@ -2,10 +2,10 @@ import { Inject, Logger } from '@nestjs/common';
 import { Mutation, Query, Resolver } from '@nestjs/graphql';
 import { ClientProxy } from '@nestjs/microservices';
 
-import { BrandModel } from '../../../brandSvc/src/brands/brand.model';
+import { BrandModel } from './brand.model';
 
-import { CreateBrandDto } from '../../../brandSvc/src/brands/createBrand.dto';
-import { UpdateBrandDto } from '../../../brandSvc/src/brands/updateBrand.dto';
+import { CreateBrandDto } from './createBrand.dto';
+import { UpdateBrandDto } from './updateBrand.dto';
 
 @Resolver((of) => BrandModel)
 export class BrandsResolver {
@@ -18,10 +18,10 @@ export class BrandsResolver {
   @Query((returns) => BrandModel)
   getBrand(brandId: string) {
     this.logger.log(`Fetching brand ${brandId}...`);
-    return this.brandClient.send({ cmd: 'get_brand' }, { brandId });
+    return this.brandClient.send({ cmd: 'get_brand' }, brandId);
   }
 
-  @Query((returns) => [BrandModel])
+  @Query((returns) => BrandModel)
   getBrands() {
     this.logger.log(`Fetching all brands...`);
     return this.brandClient.send({ cmd: 'get_brands' }, {});
@@ -30,7 +30,7 @@ export class BrandsResolver {
   @Mutation((returns) => BrandModel)
   createBrand(createBrandDto: CreateBrandDto) {
     this.logger.log(`Creating brand...`);
-    return this.brandClient.send({ cmd: 'create_brand' }, { createBrandDto });
+    return this.brandClient.send({ cmd: 'create_brand' }, createBrandDto);
   }
 
   @Mutation((returns) => BrandModel)
@@ -45,6 +45,6 @@ export class BrandsResolver {
   @Mutation((returns) => BrandModel)
   deleteBrand(brandId: string) {
     this.logger.log(`Deleting brand ${brandId}...`);
-    return this.brandClient.send({ cmd: 'update_brand' }, { brandId });
+    return this.brandClient.send({ cmd: 'update_brand' }, brandId);
   }
 }

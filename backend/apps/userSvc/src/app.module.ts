@@ -1,17 +1,14 @@
 import { AdminUserEntity } from 'nestjs-admin';
-import { ClientsModule, Transport } from '@nestjs/microservices';
-import { ConfigService } from '@nestjs/config';
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { Logger, Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { ClientsModule, Transport } from '@nestjs/microservices';
 
-import { UserModel } from './users/user.model';
 import { UsersModule } from './users/users.module';
 @Module({
   imports: [
     UsersModule,
     ConfigModule.forRoot(),
-    TypeOrmModule.forFeature([UserModel]),
     ClientsModule.register([
       { name: 'USERS', transport: Transport.TCP, options: { port: 3001 } },
     ]),

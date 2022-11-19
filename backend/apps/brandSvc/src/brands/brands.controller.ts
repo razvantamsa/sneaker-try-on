@@ -34,10 +34,7 @@ export class BrandsController {
   }
 
   @MessagePattern({ cmd: 'update_brand' })
-  async updateBrand(
-    brandId: string,
-    updateBrandDto: UpdateBrandDto,
-  ): Promise<BrandModel> {
+  async updateBrand({ brandId, updateBrandDto }): Promise<BrandModel> {
     this.logger.log(`Updating brand ${brandId}...`);
     return await await this.brandsService.updateBrand(brandId, updateBrandDto);
   }

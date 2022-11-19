@@ -36,13 +36,13 @@ clean-%:
 .PHONY: purge
 purge: clean
 	@echo "Removing all images"
-	@docker rmi $$(docker images  | grep sneaker-try-on | awk '{print $$1}')
-	@docker volume rm $$(docker volume ls | grep sneaker-try-on | awk '{print $$2}')
+	@docker rmi $$(docker images  | grep sneaker-try-on_1 | awk '{print $$1}')
+	@docker volume rm $$(docker volume ls | grep sneaker-try-on_1 | awk '{print $$2}')
 
 .PHONY: purge-%
 purge-%: clean-%
 	@echo "Removing image for $*"
-	@docker rmi $$(docker images | grep sneaker-try-on | grep $* | awk '{print $$1}')
+	@docker rmi $$(docker images | grep sneaker-try-on_1 | grep $* | awk '{print $$1}')
 
 .PHONY: exec-%
 exec-%:
@@ -55,6 +55,6 @@ drop-db:
 	@echo "Stoping db ..."
 	@docker-compose stop db || true
 	@echo "Deleting db container ..."
-	@docker ps -a | grep sneaker-try-on_db | awk '{print $$1}' | xargs docker rm
+	@docker ps -a | grep sneaker-try-on_db_1 | awk '{print $$1}' | xargs docker rm
 	@echo "Deleting db volume ..."
-	@docker volume rm sneaker-try-on_database-data
+	@docker volume rm sneaker-try-on_1_database-data

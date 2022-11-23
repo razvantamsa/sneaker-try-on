@@ -1,0 +1,81 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type BrandModel {
+  id: String!
+  name: String!
+}
+
+input CreateSneakerDto {
+  brandId: String!
+  name: String
+}
+
+input CreateUserDto {
+  avatarUrl: String!
+  email: String!
+  firstName: String!
+  isAdmin: Boolean!
+  lastName: String!
+  password: String!
+  wantsNewsletter: Boolean!
+}
+
+"""
+The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
+"""
+scalar JSON
+
+type Mutation {
+  createBrand: BrandModel!
+  createSneaker(createSneakerDto: CreateSneakerDto!): SneakerModel!
+  createUser(createUserDto: CreateUserDto!): UserModel
+  deleteBrand: BrandModel!
+  deleteSneaker(sneakerId: String!): SneakerModel!
+  deleteUser(userId: String!): UserModel!
+  updateBrand: BrandModel!
+  updateSneaker(sneakerId: String!, updateSneakerDto: UpdateSneakerDto!): SneakerModel!
+  updateUser(updateUserDto: UpdateUserDto!, userId: String!): UserModel!
+}
+
+type Query {
+  getBrand: BrandModel!
+  getBrands: BrandModel!
+  getSneaker(sneakerId: String!): SneakerModel!
+  getSneakers: [SneakerModel!]!
+  getUser(userId: String!): UserModel!
+  getUsers: [UserModel!]!
+}
+
+type SneakerModel {
+  brandId: String!
+  id: String!
+  name: String!
+}
+
+input UpdateSneakerDto {
+  name: String
+}
+
+input UpdateUserDto {
+  avatarUrl: String!
+  email: String!
+  firstName: String!
+  isAdmin: Boolean!
+  lastName: String!
+  password: String!
+  wantsNewsletter: Boolean!
+}
+
+type UserModel {
+  avatarUrl: String!
+  email: String!
+  firstName: String!
+  id: String!
+  isAdmin: Boolean!
+  lastName: String!
+  meta: JSON
+  password: String!
+  wantsNewsletter: Boolean!
+}

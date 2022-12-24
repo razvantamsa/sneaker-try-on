@@ -1,0 +1,330 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+input ActivateUserInput {
+  activationKey: String!
+}
+
+type CardModel {
+  audio: String
+  createdAt: Timestamp!
+  deck: DeckModel!
+  id: String!
+  lastSeen: Timestamp
+  photo: String
+  rating: Int
+  updatedAt: Timestamp!
+  word: JSON
+}
+
+input CreateCardInput {
+  audio: String
+  lastSeen: Timestamp
+  photo: String
+  rating: Int
+  word: JSON
+}
+
+input CreateDeckInput {
+  language: Languages
+  name: String
+}
+
+type DeckModel {
+  createdAt: Timestamp!
+  decks(id: String!): Int
+  id: String!
+  language: Languages
+  name: String
+  updatedAt: Timestamp!
+}
+
+input EditCardInput {
+  audio: String
+  lastSeen: Timestamp
+  photo: String
+  rating: Int
+  word: JSON
+}
+
+input EditDeckInput {
+  language: Languages
+  name: String
+}
+
+type GenericResponseType {
+  reason: String
+  status: MutationStatus!
+}
+
+"""
+The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
+"""
+scalar JSON
+
+enum Languages {
+  aa
+  ab
+  ae
+  af
+  ak
+  am
+  an
+  ar
+  as
+  av
+  ay
+  az
+  ba
+  be
+  bg
+  bh
+  bi
+  bm
+  bn
+  bo
+  br
+  bs
+  ca
+  ce
+  ch
+  co
+  cr
+  cs
+  cu
+  cv
+  cy
+  da
+  de
+  dv
+  ee
+  el
+  en
+  eo
+  es
+  et
+  eu
+  fa
+  ff
+  fi
+  fj
+  fo
+  fr
+  fy
+  ga
+  gd
+  gl
+  gn
+  gu
+  gv
+  ha
+  he
+  hi
+  ho
+  hr
+  ht
+  hu
+  hy
+  hz
+  ia
+  id
+  ie
+  ig
+  ii
+  ik
+  io
+  is
+  it
+  iu
+  ja
+  jv
+  ka
+  kg
+  ki
+  kj
+  kk
+  kl
+  km
+  kn
+  ko
+  kr
+  ks
+  ku
+  kv
+  kw
+  ky
+  la
+  lb
+  lg
+  li
+  ln
+  lo
+  lt
+  lu
+  lv
+  mg
+  mh
+  mi
+  mk
+  ml
+  mn
+  mr
+  ms
+  mt
+  my
+  na
+  nb
+  nd
+  ne
+  ng
+  nl
+  nn
+  no
+  nr
+  nv
+  ny
+  oc
+  oj
+  om
+  or
+  os
+  pa
+  pi
+  pl
+  ps
+  pt
+  qu
+  rm
+  rn
+  ro
+  ru
+  rw
+  sa
+  sc
+  sd
+  se
+  sg
+  si
+  sk
+  sl
+  sm
+  sn
+  so
+  sq
+  sr
+  ss
+  st
+  su
+  sv
+  sw
+  ta
+  te
+  tg
+  th
+  ti
+  tk
+  tl
+  tn
+  to
+  tr
+  ts
+  tt
+  tw
+  ty
+  ug
+  uk
+  ur
+  uz
+  ve
+  vi
+  vo
+  wa
+  wo
+  xh
+  yi
+  yo
+  za
+  zh
+}
+
+input LoginInput {
+  email: String!
+  password: String!
+}
+
+type Mutation {
+  activateUser(input: ActivateUserInput!): Tokens
+  createCard(createCardInput: CreateCardInput!): CardModel
+  createDeck(createDeckInput: CreateDeckInput!): DeckModel
+  deleteCard(id: String!): GenericResponseType
+  deleteCardsByDeckId(deckId: String!): GenericResponseType
+  deleteDeck(id: String!): GenericResponseType
+  deleteDecksByUserId: GenericResponseType
+  editCard(editCardInput: EditCardInput!): CardModel
+  editDeck(editDeckInput: EditDeckInput!): DeckModel
+  login(input: LoginInput!): Tokens
+  refreshToken: Tokens
+  requestResetPassword(input: RequestPasswordInput!): GenericResponseType!
+  resetPassword(input: ResetPasswordInput!): GenericResponseType
+  updateMe(input: UpdateUserInput!): UserModel
+  updatePassword(input: UpdatePasswordInput!): Tokens!
+}
+
+enum MutationStatus {
+  FAILED
+  SUCCESS
+}
+
+type Query {
+  getById(id: String!): CardModel
+  listByDeckId(deckId: String!): [CardModel!]
+  listByUserId: [DeckModel!]
+  me: UserModel!
+}
+
+input RequestPasswordInput {
+  email: String!
+}
+
+input ResetPasswordInput {
+  newPassword: String!
+  resetToken: String!
+}
+
+"""
+`Date` type as integer. Type represents date and time as number of milliseconds from start of UNIX epoch.
+"""
+scalar Timestamp
+
+type Tokens {
+  accessToken: String
+  refreshToken: String
+}
+
+input UpdatePasswordInput {
+  currentPassword: String!
+  newPassword: String!
+}
+
+input UpdateUserInput {
+  email: String
+  firstName: String
+  isMember: Boolean
+  lastName: String
+  profilePic: String
+}
+
+type UserModel {
+  activationKey: String
+  createdAt: Timestamp!
+  email: String
+  firstName: String
+  id: String!
+  isMember: Boolean
+  lastName: String
+  me: Int
+  profilePic: String
+  refreshToken: String
+  updatedAt: Timestamp!
+}

@@ -2,25 +2,28 @@ import { Icon } from '@rneui/themed'
 import React from 'react'
 import { Text, View, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/core';
+import { normalTheme } from '../theme';
 
-type RootStackParamList = {
-    YourScreen: { id: number } | undefined;
-  };
-
-function Header() {
-
+function Header({ isHome }: any) {
     const navigation = useNavigation<any>();
 
 
   return (
     <View style={styles.headerContainer}>
-        <Icon name='home' type='material' color='#00aced' />
-        <View style={styles.iconsContainer}>
+        <View style={styles.leftIconsContainer}>
             <View style={styles.singleIconContainer}>
-                <Icon name='account-circle' type='material' color='#00aced' onPress={() => navigation.navigate('Profile')} />
+                {!isHome && <Icon name='arrow-back' type='material' color={normalTheme.lightBlue} onPress={() => navigation.goBack()} />}
             </View>
             <View style={styles.singleIconContainer}>
-                <Icon name='settings' type='material' color='#00aced' onPress={() => navigation.navigate('Settings')} />
+                <Icon name='home' type='material' color={normalTheme.lightBlue} onPress={() => navigation.navigate('Home')} />
+            </View>
+        </View>
+        <View style={styles.rightIconsContainer}>
+            <View style={styles.singleIconContainer}>
+                <Icon name='account-circle' type='material' color={normalTheme.lightBlue} onPress={() => navigation.navigate('Profile')} />
+            </View>
+            <View style={styles.singleIconContainer}>
+                <Icon name='settings' type='material' color={normalTheme.lightBlue} onPress={() => navigation.navigate('Settings')} />
             </View>
         </View>
     </View>
@@ -36,15 +39,20 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         padding: 10,
     },
-    iconsContainer: {
+    leftIconsContainer: {
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'flex-start',
+        alignItems: 'center',
+    },
+    rightIconsContainer: {
         flex: 1,
         flexDirection: 'row',
         justifyContent: 'flex-end',
         alignItems: 'center',
     },
     singleIconContainer: {
-        // flex: 1,
-        paddingRight: 10,
+        padding: 5,
     }
 });
 

@@ -1,10 +1,40 @@
-import { IDeck } from "./interfaces/IDeck";
-
-export const decks: IDeck[] = [
-    { id: '1', name: 'JavaScript Questions', createdAt: new Date().toLocaleDateString(), updatedAt: new Date().toLocaleDateString(), numberOfCards: 42  },
-    { id: '2', name: 'Java Interview Questions', createdAt: new Date().toLocaleDateString(), updatedAt: new Date().toLocaleDateString(), numberOfCards: 66  },
-    { id: '3', name: 'Crypto', createdAt: new Date().toLocaleDateString(), updatedAt: new Date().toLocaleDateString(), numberOfCards: 12  },
-    { id: '4', name: 'Spanish - English', createdAt: new Date().toLocaleDateString(), updatedAt: new Date().toLocaleDateString(), numberOfCards: 100  },
-    { id: '5', name: 'Disertation', createdAt: new Date().toLocaleDateString(), updatedAt: new Date().toLocaleDateString(), numberOfCards: 92  },
-
+const possibleDeckNames = [
+    'Romanian',
+    'English',
+    'German',
+    'Spanish',
+    'English-Spanish',
+    'English-Romanian',
+    'English-German',
+    'German-Spanish',
+    'German-French',
+    'German-Romanian',
+    'French-Italian',
+    'Networking',
+    'Firewalls 101',
+    'JavaScript Shortcuts',
+    'AlgoExpert',
+    'Trading Terminology'
 ]
+
+function generateDeckName() {
+    const id = Math.floor(Math.random() * possibleDeckNames.length);
+    return possibleDeckNames[id];
+}
+
+export function generateDecks(numberOfDecks: number) {
+    const decks: any = [];
+
+    [...Array(numberOfDecks).keys()].forEach((id) => {
+        const newDeck: any = { id };
+        newDeck.name = generateDeckName();
+        newDeck.createdAt = new Date().toLocaleDateString();
+        newDeck.updatedAt = new Date().toLocaleDateString();
+        newDeck.lastPracticed = new Date().toLocaleDateString();
+        newDeck.numberOfCards = Math.floor(Math.random() * 100);
+        newDeck.cardsDue = Math.floor(Math.random() * newDeck.numberOfCards);
+        decks.push(newDeck);
+    })
+
+    return decks;
+}

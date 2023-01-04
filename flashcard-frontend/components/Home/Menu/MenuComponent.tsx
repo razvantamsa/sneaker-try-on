@@ -17,7 +17,7 @@ export default function Menu({ decks, navigation, setIsAddDeckModalVisible }: an
     }
 
   return (
-    <View style={[{ flex: 3, width: '80%' }]}>
+    <View style={[{ flex: 4, width: '80%' }]}>
         <View style={styles.menuControlContainer}>
             <MenuActions 
                 setPagination={setPagination}
@@ -34,6 +34,7 @@ export default function Menu({ decks, navigation, setIsAddDeckModalVisible }: an
         </View>
         <MenuDecks 
             decks={displayOnlyOnePage()} 
+            navigation={navigation}
             />
     </View>
   )

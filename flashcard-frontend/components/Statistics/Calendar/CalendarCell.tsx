@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { normalTheme } from '../../theme';
-import { newShade } from './utils';
+import { newShade } from '../utils';
 
 function getRandomColorIndex() {
     let colorIndex = Math.floor(Math.random() * 10);

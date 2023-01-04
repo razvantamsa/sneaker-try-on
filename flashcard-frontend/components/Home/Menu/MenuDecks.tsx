@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, Text, View, TouchableWithoutFeedback } from 'react-native'
 import { normalTheme } from '../../theme';
 
 function getDeckPracticeStatus(deck: any) {
@@ -12,28 +12,34 @@ function getDeckPracticeStatus(deck: any) {
     return normalTheme.danger;
 }
 
-export default function MenuDecks({ decks }: any) {
+export default function MenuDecks({ decks, navigation }: any) {
   return (
     <View style={styles.menuDecks}>
         <View style={[styles.tableColumn, {flex: 3}]}>
             {decks.map((deck: any) =>
-                <View key={deck.id} style={styles.tableRow}>
-                    <Text>{deck.name}</Text>  
-                </View>
+                <TouchableWithoutFeedback key={deck.id} onPress={() => navigation.push('Deck', { deck })}>
+                    <View key={deck.id} style={styles.tableRow}>
+                        <Text>{deck.name}</Text>  
+                    </View>
+                </TouchableWithoutFeedback>
             )}
         </View>
         <View style={styles.tableColumn}>
             {decks.map((deck: any) => 
-                <View key={deck.id} style={styles.tableRow}>
-                <Text>{deck.numberOfCards}</Text>  
-            </View> 
+                <TouchableWithoutFeedback key={deck.id} onPress={() => navigation.push('Deck', { deck })}>
+                    <View key={deck.id} style={styles.tableRow}>
+                        <Text>{deck.numberOfCards}</Text>  
+                    </View> 
+                </TouchableWithoutFeedback>
             )}
         </View>
         <View style={styles.tableColumn}>
             {decks.map((deck: any) => 
-                <View key={deck.id} style={styles.tableRow}>
-                <Text style={[{color: getDeckPracticeStatus(deck)}]}>{deck.cardsDue}</Text>  
-            </View> 
+                <TouchableWithoutFeedback key={deck.id} onPress={() => navigation.push('Deck', { deck })}>
+                    <View key={deck.id} style={styles.tableRow}>
+                        <Text style={[{color: getDeckPracticeStatus(deck)}]}>{deck.cardsDue}</Text>  
+                    </View> 
+                </TouchableWithoutFeedback>
             )}
         </View>
     </View>

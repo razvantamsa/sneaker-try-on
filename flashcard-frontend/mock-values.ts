@@ -38,3 +38,21 @@ export function generateDecks(numberOfDecks: number) {
 
     return decks;
 }
+
+export function generateCards(numberOfCards: number) {
+    const cards: any = [];
+
+    [...Array(numberOfCards).keys()].forEach((id) => {
+        const newCard: any = { id };
+        newCard.front = `Question ${id}`;
+        newCard.back = `Answer ${id}`;
+        newCard.createdAt = new Date().toLocaleDateString();
+        newCard.updatedAt = new Date().toLocaleDateString();
+        newCard.lastPracticed = new Date().toLocaleDateString();
+        newCard.timesPracticed = Math.floor(Math.random() * 100);
+        newCard.isDue = Math.random() < 0.5;
+        cards.push(newCard);
+    })
+
+    return cards;
+}

@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View, TouchableWithoutFeedback } from 'react-native';
 import { Icon } from '@rneui/themed';
-import { getMonthName, goToNextMonth, goToPreviousMonth } from './utils';
+import { getMonthName, goToNextMonth, goToPreviousMonth } from '../utils';
 
 export default function CalendarControl({monthDisplayed, setMonthDisplayed, setStartDay}: any) {
   return (

@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { StyleSheet, View } from 'react-native';
 import { generateDecks } from '../../mock-values';
+import CalendarComponent from '../Statistics/Calendar/CalendarComponent';
 import Menu from './Menu/MenuComponent';
-import StatisticsComponent from './Statistics/StatisticsComponent';
 import ModalComponent from './Modal/ModalComponent';
 
 export default function HomeScreen({ navigation }: any) {
@@ -20,7 +20,7 @@ export default function HomeScreen({ navigation }: any) {
     <View style={styles.appContainer}>
         <ModalComponent setDecks={setDecks} isAddDeckModalVisible={isAddDeckModalVisible} setIsAddDeckModalVisible={setIsAddDeckModalVisible} />
         <Menu decks={decks} navigation={navigation} isAddDeckModalVisible={isAddDeckModalVisible} setIsAddDeckModalVisible={setIsAddDeckModalVisible} />
-        <StatisticsComponent />
+        <CalendarComponent styleProps={{flex: 3}} />
     </View>
   )
 }

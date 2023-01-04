@@ -63,3 +63,13 @@ export function newShade (hexColor: string, magnitude: number, isCalendarDay: bo
         return hexColor;
     }
 };
+
+export function getLastWeekDependingOnCurrentDay() {
+    const concatDays = [...days, ...days];
+    const nextDayAfterToday = new Date().getDay() + 1;
+    return concatDays.slice(nextDayAfterToday, nextDayAfterToday + 7);
+}
+
+export function getDayByIndex(index: number) {
+    return days[index];
+}

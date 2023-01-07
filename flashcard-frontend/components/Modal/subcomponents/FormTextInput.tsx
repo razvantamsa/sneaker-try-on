@@ -13,11 +13,12 @@ export default function FormTextInput({name, value, setValueFunction, clearValue
                 <Text style={{fontWeight: '700'}}>{name}: </Text>
                 <View style={styles.textInputContainer}>
                     <TextInput style={{width: '80%'}} placeholder={name} value={value} onChangeText={setValueFunction} />
+                    {!!value && 
                     <TouchableWithoutFeedback onPress={clearValueFunction}>
                         <View style={styles.clearIconWraper}>
                           <Icon name='clear' type='material' color='black' size={15}/>
                         </View>
-                    </TouchableWithoutFeedback>
+                    </TouchableWithoutFeedback>}
                 </View>
         </View>
     );

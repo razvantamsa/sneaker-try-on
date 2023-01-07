@@ -6,7 +6,7 @@ import { normalTheme } from '../theme';
 import StatsComponent from './Stats/StatsComponent';
 import BrowseComponent from './Browse/BrowseComponent';
 import PracticeComponent from './Practice/PracticeComponent';
-import AddCardModal from '../Modal/AddCardModal';
+import CardModal from '../Modal/CardModal';
 
 function DeckScreenOptionButton({ deckScreenOption, setDeckScreenOption, option }: any) {
     return (
@@ -14,7 +14,6 @@ function DeckScreenOptionButton({ deckScreenOption, setDeckScreenOption, option 
             onPress={() => setDeckScreenOption(option)}
             title={option}
             color={deckScreenOption === option ? normalTheme.paleLightBlue : normalTheme.lightBlue}
-
             />
     );
 }
@@ -22,7 +21,7 @@ function DeckScreenOptionButton({ deckScreenOption, setDeckScreenOption, option 
 export default function DeckScreen({ navigation, route }: any) {
     const [cards, setCards] = useState([]);
     const [searchByName, setSearchByName] = useState('');
-    const [addCardModal, setAddCardModal] = useState(false);
+    const [cardToDisplay, setCardToDisplay] = useState({});
 
     const [deckScreenOption, setDeckScreenOption] = useState('practice');
 
@@ -34,10 +33,14 @@ export default function DeckScreen({ navigation, route }: any) {
 
   return (
     <View style={styles.deckScreenContainer}>
-        <AddCardModal isModalVisible={addCardModal} setIsModalVisible={setAddCardModal} deck={route.params.deck} />
-        <Header 
-            deck={route.params.deck}
+        <CardModal 
+            isModalVisible={cardToDisplay.hasOwnProperty('displayType')} 
+            setIsModalVisible={setCardToDisplay} 
+            card={cardToDisplay} 
+            cards={cards} 
+            setCards={setCards}
         />
+        <Header deck={route.params.deck} />
         <View style={styles.buttonSelectDisplay}>
             <DeckScreenOptionButton deckScreenOption={deckScreenOption} setDeckScreenOption={setDeckScreenOption} option={'practice'}  />
             <DeckScreenOptionButton deckScreenOption={deckScreenOption} setDeckScreenOption={setDeckScreenOption} option={'browse'}  />
@@ -50,7 +53,8 @@ export default function DeckScreen({ navigation, route }: any) {
                         cards={cards} 
                         searchByName={searchByName} 
                         setSearchByName={setSearchByName} 
-                        setAddCardModal={setAddCardModal}
+                        cardToDisplay={cardToDisplay}
+                        setCardToDisplay={setCardToDisplay}
                         />}
             {deckScreenOption === 'stats' && <StatsComponent />}
         </View>

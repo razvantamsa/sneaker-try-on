@@ -1,20 +1,10 @@
-import { Icon } from '@rneui/themed';
 import React from 'react';
-import { StyleSheet, Text, View, TouchableWithoutFeedback } from 'react-native';
-import { normalTheme } from '../../theme';
+import { StyleSheet, Text, View } from 'react-native';
 
 export default function Header({ deck }: any) {
   return (
     <View style={styles.headerContainer}>
         <Text style={styles.headerText}>{deck.name}</Text>
-        {/* <View style={styles.menuViewItem}>
-            <TouchableWithoutFeedback onPress={() => console.log('edit pressed')}>
-              <Icon name='edit' type='material' color={normalTheme.warning} size={30}/>
-            </TouchableWithoutFeedback>
-            <TouchableWithoutFeedback onPress={() => console.log('delete pressed')}>
-                <Icon name='clear' type='material' color={normalTheme.danger} size={30}/>
-            </TouchableWithoutFeedback>
-        </View> */}
     </View>
   )
 }

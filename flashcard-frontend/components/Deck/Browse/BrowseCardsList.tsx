@@ -3,12 +3,26 @@ import React from 'react';
 import { StyleSheet, Text, View, TouchableWithoutFeedback, ScrollView } from 'react-native';
 import { normalTheme } from '../../theme';
 
-export default function BrowseCardsList({ cards }: any) {
+export default function BrowseCardsList({ cards, cardToDisplay, setCardToDisplay }: any) {
+    function setDeleteCardModal(card: any) {
+        setCardToDisplay({
+            ...card,
+            displayType: 'delete',
+        })
+    }
+
+    function setViewCardModal(card: any) {
+        setCardToDisplay({
+            ...card,
+            displayType: 'view',
+        })
+    }
+
   return (
     <View style={styles.menuDecks}>
         <ScrollView style={{ width: '100%'}}>
             {cards.map((card: any) =>
-                <TouchableWithoutFeedback key={card.id} onPress={() => console.log(`card pressed: ${card.front}`)}>
+                <TouchableWithoutFeedback key={card.id} onPress={() => setViewCardModal(card)}>
                     <View key={card.id} style={styles.tableRow}>
                         <View style={styles.leftSideContent} >
                             <Text>{card.front}</Text> 
@@ -19,7 +33,7 @@ export default function BrowseCardsList({ cards }: any) {
                                     <Icon name='edit' type='material' color={normalTheme.warning} size={20}/>
                                 </View>
                             </TouchableWithoutFeedback>
-                            <TouchableWithoutFeedback onPress={() => console.log('delete pressed')}>
+                            <TouchableWithoutFeedback onPress={() => setDeleteCardModal(card)}>
                                <View style={{padding: 5}}>
                                     <Icon name='clear' type='material' color={normalTheme.danger} size={20}/>
                                 </View>
@@ -30,7 +44,7 @@ export default function BrowseCardsList({ cards }: any) {
             )}
             {!cards.length && 
                 <View style={{marginTop: 50,alignItems: 'center', justifyContent: 'center'}}>
-                    <Text>No cards...</Text>
+                    <Text>No cards</Text>
                 </View>}
         </ScrollView>
     </View>

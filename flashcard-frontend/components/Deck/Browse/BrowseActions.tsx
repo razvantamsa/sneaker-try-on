@@ -4,11 +4,10 @@ import { StyleSheet, Text, View, TouchableWithoutFeedback, Keyboard } from 'reac
 import { TextInput } from 'react-native-gesture-handler';
 import { normalTheme } from '../../theme';
 
-export default function BrowseActions({ searchByName, setSearchByName, setAddCardModal }: any) {
+export default function BrowseActions({ searchByName, setSearchByName, setCardToDisplay }: any) {
 
     function searchOnChangeText (text: string) {
         setSearchByName(text)
-        // setPagination(0);
     }
 
     function clearSearchBar () {
@@ -16,15 +15,15 @@ export default function BrowseActions({ searchByName, setSearchByName, setAddCar
         Keyboard.dismiss();   
     }
 
-    // function toggleModal() {
-    //     setIsAddDeckModalVisible((prevValue: boolean) => !prevValue)
-    // }
+    function setAddCardModal() {
+        setCardToDisplay({ displayType: 'add' });
+    }
 
   return (
     <View style={styles.menuActionsContainer}>
         <View style={styles.textInputContainer}>
             <TextInput 
-                placeholder='Search decks' 
+                placeholder='Search cards' 
                 value={searchByName} 
                 onChangeText={searchOnChangeText} 
                 />
@@ -39,7 +38,7 @@ export default function BrowseActions({ searchByName, setSearchByName, setAddCar
             }
         </View>
         <TouchableWithoutFeedback 
-            onPress={() => setAddCardModal(true)}
+            onPress={setAddCardModal}
             >
             <View style={styles.menuViewItem}>
                 <Icon name='add-box' type='material' color={normalTheme.allow} size={30}/>

@@ -2,7 +2,7 @@ import React from 'react';
 import { View, StyleSheet, Text }from 'react-native';
 import FormTextInput from '../subcomponents/FormTextInput';
 
-export default function AddModalForm({card, setCardToDisplay}: any) {
+export default function AddOrEditModalForm({card, setCardToDisplay, headerText}: any) {
 
     function updateFrontOfCard(text: string) {
         setCardToDisplay((prevValue: any) => ({...prevValue, front: text}));
@@ -23,7 +23,7 @@ export default function AddModalForm({card, setCardToDisplay}: any) {
   return (
     <View style={styles.cardForm}>
         <View style={{ margin: 20 }}>
-            <Text style={{fontWeight: '700', fontSize: 18}}>Add a New Card</Text>
+            <Text style={{fontWeight: '700', fontSize: 18}}>{headerText}</Text>
         </View>
         <FormTextInput name={'Front'} value={card.front} setValueFunction={updateFrontOfCard} clearValueFunction={clearFrontOfCard} />
         <FormTextInput name={'Back'} value={card.back} setValueFunction={updateBackOfCard} clearValueFunction={clearBackOfCard} />

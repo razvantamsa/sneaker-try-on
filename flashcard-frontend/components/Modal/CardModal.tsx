@@ -5,8 +5,8 @@ import DeleteCardForm from './forms/DeleteCardForm';
 import CloseModalButton from './subcomponents/CloseModalButton';
 import SubmitModalButton from './subcomponents/SubmitModalButton';
 import ViewCardForm from './forms/ViewCardForm';
-import { generateCardObject } from './utils';
-import AddModalForm from './forms/AddModalForm';
+import { generateAddCardObject, generateEditCardObject } from './utils';
+import AddOrEditModalForm from './forms/AddOrEditModalForm';
 
 export default function CardModal({ 
         isModalVisible, 
@@ -16,7 +16,12 @@ export default function CardModal({
         setCards
     }: any) {
 
-    const submitButtonColor = card.displayType === 'delete' ? normalTheme.danger : normalTheme.allow;
+    console.log(card.displayType);
+
+    const headerText = card.displayType === 'add' ? 'Add New Card' : 
+                        card.displayType === 'edit' ? 'Edit Card' : '';
+    const submitButtonColor = card.displayType === 'delete' ? normalTheme.danger :
+                        card.displayType === 'edit' ? normalTheme.warning : normalTheme.allow;
     const submitButtonText = card.displayType === 'delete' ? 'Delete': 
             card.displayType === 'view' ? 'Ok' : 'Submit';
 
@@ -32,8 +37,15 @@ export default function CardModal({
             if(card.front && card.back) {
                 const id = cards.length;
                 setCards((prevValue: any) => 
-                    [generateCardObject(id, card), ...prevValue]
+                    [generateAddCardObject(id, card), ...prevValue]
                 );
+            }
+            Keyboard.dismiss();
+        }
+        if(card.displayType === 'edit') {
+            if(card.front && card.back) {
+                const newCards = cards.filter((cardItem: any) => cardItem.id !== card.id);
+                setCards([generateEditCardObject(card), ...newCards]);
             }
             Keyboard.dismiss();
         }
@@ -51,7 +63,10 @@ export default function CardModal({
             <View style={styles.modalWrapper}>
                 <CloseModalButton  closeModalFunction={closeModal} />
                 {card.displayType === 'view' && <ViewCardForm card={card}/>}
-                {card.displayType === 'add' && <AddModalForm card={card} setCardToDisplay={setIsModalVisible} />}
+                {card.displayType === 'add' || card.displayType === 'edit' && <AddOrEditModalForm 
+                                card={card} 
+                                setCardToDisplay={setIsModalVisible} 
+                                headerText={headerText} />}
                 {card.displayType === 'delete' && <DeleteCardForm card={card}/>}
                 <SubmitModalButton  
                     submitModalFunction={submitModal}

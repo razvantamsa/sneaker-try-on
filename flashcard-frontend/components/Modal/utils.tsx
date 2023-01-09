@@ -1,4 +1,4 @@
-export function generateCardObject(id: number, card: any) {
+export function generateAddCardObject(id: number, card: any) {
     return {
         id,
         front: card.front,
@@ -9,4 +9,11 @@ export function generateCardObject(id: number, card: any) {
         timesPracticed: 0,
         isDue: true
     }
+}
+
+export function generateEditCardObject(card: any) {
+    const editedCard = { ...card };
+    delete editedCard.displayType;
+    editedCard.updatedAt = new Date().toLocaleDateString();
+    return editedCard;
 }

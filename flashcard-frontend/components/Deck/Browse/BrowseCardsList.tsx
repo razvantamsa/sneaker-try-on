@@ -18,6 +18,13 @@ export default function BrowseCardsList({ cards, cardToDisplay, setCardToDisplay
         })
     }
 
+    function setEditCardModal(card: any) {
+        setCardToDisplay({
+            ...card,
+            displayType: 'edit',
+        }) 
+    }
+
   return (
     <View style={styles.menuDecks}>
         <ScrollView style={{ width: '100%'}}>
@@ -28,7 +35,7 @@ export default function BrowseCardsList({ cards, cardToDisplay, setCardToDisplay
                             <Text>{card.front}</Text> 
                         </View>
                         <View style={styles.rightSideContent} >
-                            <TouchableWithoutFeedback onPress={() => console.log('edit pressed')}>
+                            <TouchableWithoutFeedback onPress={() => setEditCardModal(card)}>
                                 <View style={{padding: 5}}>
                                     <Icon name='edit' type='material' color={normalTheme.warning} size={20}/>
                                 </View>

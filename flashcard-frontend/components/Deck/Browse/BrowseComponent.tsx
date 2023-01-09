@@ -5,7 +5,7 @@ import { StyleSheet, Text, View, ScrollView, Button } from 'react-native'
 
 export default function BrowseComponent({ searchByName, setSearchByName, cards, cardToDisplay, setCardToDisplay }: any) {
 
-    const filteredCards = cards.filter((cards: any) => cards.front.includes(searchByName));
+    const filteredCards = cards.filter((cards: any) => cards.front.toLowerCase().includes(searchByName.toLowerCase()));
 
   return (
     <>

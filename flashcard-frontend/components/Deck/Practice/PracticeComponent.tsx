@@ -1,38 +1,29 @@
-import { Icon } from '@rneui/themed';
-import React from 'react';
-import { StyleSheet, Text, View, ScrollView, Button, TouchableWithoutFeedback } from 'react-native';
+import React, { useState } from 'react';
+import { StyleSheet, Text, View, ScrollView, Button, TouchableWithoutFeedback, TextInput } from 'react-native';
 import { normalTheme } from '../../theme';
+import PracticeHeader from './PracticeHeader';
+import PracticeQandA from './PracticeQandA';
+import PracticeTextInput from './PracticeTextInput';
+import ReviewActionButton from './components/ReviewActionButton';
+import PracticeCheckButton from './PracticeCheckButton';
+import PracticeReviewActions from './PracticeReviewActions';
+ 
+export default function DefaultComponent({ cards }: any) {
 
-export default function DefaultComponent() {
-
-    const cardsDue = Math.floor(Math.random() * 100 % 10);
-    console.log(cardsDue);
+    const [ practiceCard, setPracticeCard ] = useState(cards.length ? cards[0]: {});
+    const [ answer, setAnswer ] = useState('');
+    const [ currentCardState, setCurrentCardState ] = useState('submit');
+    console.log(currentCardState);
 
   return (
     <View style={styles.defaultComponentWrapper}>
-        <TouchableWithoutFeedback onPress={() => console.log('Start Practicing')}>
-            <View style={{ padding: 30, borderRadius: 5, backgroundColor: normalTheme.allow, margin: 50 }}>
-                <Text style={{fontWeight: '700', fontSize: 20}}>Start Practicing</Text>
-            </View>
-        </TouchableWithoutFeedback>
-        <Text style={{fontSize: 15}}>{cardsDue ? `Cards due: ${cardsDue}` : 'No cards due'}</Text>
-        {/* <View style={styles.buttonWrapper}>
-            <TouchableWithoutFeedback onPress={() => console.log('edit pressed')}>
-                <View style={{padding: 5, borderRadius: 20, backgroundColor: normalTheme.warning}}>
-                    <Icon name='edit' type='material' color='white' size={30}/>
-                </View>
-            </TouchableWithoutFeedback>
-            <TouchableWithoutFeedback onPress={() => console.log('delete pressed')}>
-            <View style={{padding: 5, borderRadius: 20, backgroundColor: normalTheme.danger}}>
-                    <Icon name='clear' type='material' color='white' size={30}/>
-                </View>
-            </TouchableWithoutFeedback>
-        </View> */}
-        <TouchableWithoutFeedback onPress={() => console.log('Start Practicing')}>
-            <View style={{ padding: 30, borderRadius: 5, backgroundColor: normalTheme.danger, margin: 50 }}>
-                <Text style={{fontWeight: '700', fontSize: 20}}>Remove Deck</Text>
-            </View>
-        </TouchableWithoutFeedback>
+        <PracticeHeader cards={cards} />
+        <View style={styles.heroWrapper}>
+            <PracticeQandA practiceCard={practiceCard} currentCardState={currentCardState} />
+            <PracticeTextInput currentCardState={currentCardState} answer={answer} setAnswer={setAnswer} />
+            { currentCardState === 'submit' && <PracticeCheckButton setCurrentCardState={setCurrentCardState} /> }
+            { currentCardState === 'review' && <PracticeReviewActions setCurrentCardState={setCurrentCardState} />}
+        </View>
     </View>
   )
 }
@@ -43,17 +34,11 @@ const styles = StyleSheet.create({
         width: '80%',
         alignItems: 'center',
         justifyContent: 'center',
-        
-        // borderColor: 'black', 
-        // borderWidth: 1,
     },
-    buttonWrapper: {
-        flexDirection: 'row',
-        width: '80%',
+    heroWrapper: {
+        flex: 5,
+        width: '100%',
         alignItems: 'center',
-        justifyContent: 'space-between',
-        margin: 50,
-
-        // backgroundColor: 'orange',
-    }
+        justifyContent: 'center',
+    },
 });

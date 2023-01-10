@@ -47,7 +47,10 @@ export default function DeckScreen({ navigation, route }: any) {
             <DeckScreenOptionButton deckScreenOption={deckScreenOption} setDeckScreenOption={setDeckScreenOption} option={'stats'}  />
         </View>
         <View style={styles.deckScreenLayout}>
-            {deckScreenOption === 'default' && <PracticeComponent />}
+            {deckScreenOption === 'practice' 
+                && <PracticeComponent 
+                        cards={cards.filter((item: any) => item.isDue === true)} 
+                        />}
             {deckScreenOption === 'browse' 
                 && <BrowseComponent 
                         cards={cards} 

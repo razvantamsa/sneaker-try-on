@@ -3,12 +3,24 @@ import { View, StyleSheet } from 'react-native'
 import { normalTheme } from '../../theme';
 import ReviewActionButton from './components/ReviewActionButton';
 
-export default function PracticeReviewActions({ setCurrentCardState }: any) {
+export default function PracticeReviewActions({ setCurrentCardState, setAnswer }: any) {
+
+    const actionButtons = [
+        { text: 'Easy', backgroundColor: normalTheme.allow },
+        { text: 'Medium', backgroundColor: normalTheme.warning },
+        { text: 'Hard', backgroundColor: normalTheme.danger },
+    ]
+
   return (
     <View style={styles.reviewActionsWrapper}>
-        <ReviewActionButton text='Easy' backgroundColor={normalTheme.allow} setCurrentCardState={setCurrentCardState}  /> 
-        <ReviewActionButton text='Medium' backgroundColor={normalTheme.warning} setCurrentCardState={setCurrentCardState}  /> 
-        <ReviewActionButton text='Hard' backgroundColor={normalTheme.danger} setCurrentCardState={setCurrentCardState}  /> 
+        {actionButtons.map(({ text, backgroundColor }: any) => 
+            <ReviewActionButton 
+                text={text} 
+                backgroundColor={backgroundColor} 
+                setCurrentCardState={setCurrentCardState} 
+                setAnswer={setAnswer}
+                /> 
+        )}
     </View>
   )
 }

@@ -1,3 +1,5 @@
+import uuid from 'react-native-uuid';
+
 const possibleDeckNames = [
     'Romanian',
     'English',
@@ -57,8 +59,8 @@ function generateDeckName() {
 export function generateDecks(numberOfDecks: number) {
     const decks: any = [];
 
-    [...Array(numberOfDecks).keys()].forEach((id) => {
-        const newDeck: any = { id };
+    [...Array(numberOfDecks).keys()].forEach((index) => {
+        const newDeck: any = { id: uuid.v4().toString() };
         newDeck.name = generateDeckName();
         newDeck.createdAt = new Date().toLocaleDateString();
         newDeck.updatedAt = new Date().toLocaleDateString();
@@ -74,8 +76,8 @@ export function generateDecks(numberOfDecks: number) {
 export function generateCards(numberOfCards: number) {
     const cards: any = [];
 
-    [...Array(numberOfCards).keys()].forEach((id) => {
-        const newCard: any = { id };
+    [...Array(numberOfCards).keys()].forEach((index) => {
+        const newCard: any = { id: uuid.v4().toString() };
         const newCardQuestionIndex = getRandomInt(possibleCardFrontBack.length);
         newCard.front = possibleCardFrontBack[newCardQuestionIndex].front;
         newCard.back = possibleCardFrontBack[newCardQuestionIndex].back;

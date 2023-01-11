@@ -2,6 +2,7 @@ import { Icon } from '@rneui/themed';
 import React from 'react';
 import { StyleSheet, Text, View, TouchableWithoutFeedback, Keyboard } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
+import Card from '../../../models/Card';
 import { normalTheme } from '../../theme';
 
 export default function BrowseActions({ searchByName, setSearchByName, setCardToDisplay }: any) {
@@ -16,7 +17,8 @@ export default function BrowseActions({ searchByName, setSearchByName, setCardTo
     }
 
     function setAddCardModal() {
-        setCardToDisplay({ displayType: 'add' });
+        // Card.add('front', 'back');
+        setCardToDisplay({...new Card(), displayType: 'add'});
     }
 
   return (

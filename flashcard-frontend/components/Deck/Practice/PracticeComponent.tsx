@@ -22,7 +22,7 @@ export default function DefaultComponent({ cards }: any) {
             <PracticeQandA practiceCard={practiceCard} currentCardState={currentCardState} />
             <PracticeTextInput currentCardState={currentCardState} answer={answer} setAnswer={setAnswer} />
             { currentCardState === 'submit' && <PracticeCheckButton setCurrentCardState={setCurrentCardState} /> }
-            { currentCardState === 'review' && <PracticeReviewActions setCurrentCardState={setCurrentCardState} />}
+            { currentCardState === 'review' && <PracticeReviewActions setCurrentCardState={setCurrentCardState} setAnswer={setAnswer} />}
         </View>
     </View>
   )

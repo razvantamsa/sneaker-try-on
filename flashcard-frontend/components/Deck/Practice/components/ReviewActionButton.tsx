@@ -1,13 +1,13 @@
 import React from 'react';
-import { StyleSheet, Text, View, ScrollView, Button, TouchableWithoutFeedback, TextInput } from 'react-native';
+import { StyleSheet, Text, View, ScrollView, Button, TouchableWithoutFeedback } from 'react-native';
 import { normalTheme } from '../../../theme';
 
-export default function ReviewActionButton({ text, backgroundColor, setCurrentCardState }: any) {
+export default function ReviewActionButton({ text, backgroundColor, setCurrentCardState, setAnswer }: any) {
     return (
         <TouchableWithoutFeedback onPress={() => {
             console.log(`action chosen: ${text}`);
             setCurrentCardState('submit');
-            // setAnswer('');
+            setAnswer('');
             // setPracticeCard
         }}>
             <View style={[ styles.reviewActionButton, { backgroundColor } ]}>

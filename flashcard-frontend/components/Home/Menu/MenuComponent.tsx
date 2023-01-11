@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, View, Text } from 'react-native';
 import MenuDecks from './MenuDecks';
 import { DECKS_DISPLAYED } from '../../theme';
 import { getDecksToDisplay } from './utils';

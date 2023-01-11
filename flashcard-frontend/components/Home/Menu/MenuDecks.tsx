@@ -15,33 +15,38 @@ function getDeckPracticeStatus(deck: any) {
 export default function MenuDecks({ decks, navigation }: any) {
   return (
     <View style={styles.menuDecks}>
-        <View style={[styles.tableColumn, {flex: 3}]}>
-            {decks.map((deck: any) =>
-                <TouchableWithoutFeedback key={deck.id} onPress={() => navigation.push('Deck', { deck })}>
-                    <View key={deck.id} style={styles.tableRow}>
-                        <Text>{deck.name}</Text>  
-                    </View>
-                </TouchableWithoutFeedback>
-            )}
-        </View>
-        <View style={styles.tableColumn}>
-            {decks.map((deck: any) => 
-                <TouchableWithoutFeedback key={deck.id} onPress={() => navigation.push('Deck', { deck })}>
-                    <View key={deck.id} style={styles.tableRow}>
-                        <Text>{deck.numberOfCards}</Text>  
-                    </View> 
-                </TouchableWithoutFeedback>
-            )}
-        </View>
-        <View style={styles.tableColumn}>
-            {decks.map((deck: any) => 
-                <TouchableWithoutFeedback key={deck.id} onPress={() => navigation.push('Deck', { deck })}>
-                    <View key={deck.id} style={styles.tableRow}>
-                        <Text style={[{color: getDeckPracticeStatus(deck)}]}>{deck.cardsDue}</Text>  
-                    </View> 
-                </TouchableWithoutFeedback>
-            )}
-        </View>
+        {decks.length ? 
+        <>
+                <View style={[styles.tableColumn, {flex: 3}]}>
+                {decks.map((deck: any) =>
+                    <TouchableWithoutFeedback key={deck.id} onPress={() => navigation.push('Deck', { deck })}>
+                        <View key={deck.id} style={styles.tableRow}>
+                            <Text>{deck.name}</Text>  
+                        </View>
+                    </TouchableWithoutFeedback>
+                )}
+            </View>
+            <View style={styles.tableColumn}>
+                {decks.map((deck: any) => 
+                    <TouchableWithoutFeedback key={deck.id} onPress={() => navigation.push('Deck', { deck })}>
+                        <View key={deck.id} style={styles.tableRow}>
+                            <Text>{deck.numberOfCards}</Text>  
+                        </View> 
+                    </TouchableWithoutFeedback>
+                )}
+            </View>
+            <View style={styles.tableColumn}>
+                {decks.map((deck: any) => 
+                    <TouchableWithoutFeedback key={deck.id} onPress={() => navigation.push('Deck', { deck })}>
+                        <View key={deck.id} style={styles.tableRow}>
+                            <Text style={[{color: getDeckPracticeStatus(deck)}]}>{deck.cardsDue}</Text>  
+                        </View> 
+                    </TouchableWithoutFeedback>
+                )}
+            </View>
+
+        </>
+        : <Text style={{fontWeight: '700', fontSize: 18, textAlign: 'center'}}>No decks</Text>}
     </View>
   )
 }
